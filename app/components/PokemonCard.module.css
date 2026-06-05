@@ -1,0 +1,33 @@
+.card {
+  border: 1px solid #e2e2e2;
+  border-radius: 12px;
+  padding: 16px;
+  background-color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.image {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+}
+
+.id {
+  color: #9aa0a6;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.name {
+  margin-top: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
