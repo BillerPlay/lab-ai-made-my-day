@@ -14,7 +14,6 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch a page of Pokémon every time the page number changes.
   useEffect(() => {
     async function loadPokemon() {
       setLoading(true);
@@ -42,39 +41,28 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <header style={{ textAlign: "center", marginBottom: "32px" }}>
-        <h1 style={{ fontSize: "32px", fontWeight: 700, color: "#ef5350" }}>
-          Pokédex
-        </h1>
-        <p style={{ color: "#666", marginTop: "4px" }}>
-          Click on a Pokémon to see its details.
-        </p>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Pokédex</h1>
+        <p className={styles.subtitle}>Click on a Pokémon to see its details.</p>
       </header>
 
-      {loading && (
-        <p style={{ textAlign: "center", padding: "40px" }}>Loading Pokémon…</p>
-      )}
+      {loading && <p className={styles.loading}>Loading Pokémon…</p>}
 
       {error && (
-        <div
-          style={{
-            backgroundColor: "#fdecea",
-            border: "1px solid #f5c6cb",
-            color: "#b71c1c",
-            padding: "16px",
-            borderRadius: "8px",
-            textAlign: "center",
-            maxWidth: "480px",
-            margin: "0 auto",
-          }}
-        >
+        <div className={styles.error}>
           <strong>Oops! We couldn&apos;t load the Pokémon.</strong>
-          <p style={{ marginTop: "4px", fontSize: "14px" }}>{error}</p>
+          <p className={styles.errorMessage}>{error}</p>
         </div>
       )}
 
       {!loading && !error && (
         <>
+          {selected && (
+            <div className={styles.overlay} onClick={() => setSelected(null)}>
+              <PokemonDetail pokemon={selected} onClose={() => setSelected(null)} />
+            </div>
+          )}
+
           <div className={styles.grid}>
             {pokemon.map((p) => (
               <PokemonCard key={p.name} pokemon={p} onSelect={setSelected} />
@@ -83,14 +71,10 @@ export default function Home() {
 
           <Pagination
             page={page}
-            onPrev={() => setPage((prev) => Math.max(1, prev - 1))}
-            onNext={() => setPage((prev) => prev + 1)}
+            onPrev={() => setPage((p) => Math.max(1, p - 1))}
+            onNext={() => setPage((p) => p + 1)}
           />
         </>
-      )}
-
-      {selected && (
-        <PokemonDetail pokemon={selected} onClose={() => setSelected(null)} />
       )}
     </div>
   );
